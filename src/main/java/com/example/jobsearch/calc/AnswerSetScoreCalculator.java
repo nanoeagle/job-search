@@ -1,20 +1,20 @@
-package com.example.jobsearch.answer;
+package com.example.jobsearch.calc;
 
-import com.example.jobsearch.collectionwrappers.AnswerMapWrapper;
-import com.example.jobsearch.criterion.Criteria;
-import com.example.jobsearch.criterion.Criterion;
+import com.example.jobsearch.answer.Answer;
+import com.example.jobsearch.containers.AnswerContainer;
+import com.example.jobsearch.criterion.*;
 
 public class AnswerSetScoreCalculator {
-    private AnswerMapWrapper profileAnswers;
+    private AnswerContainer profileAnswers;
     private Criteria criteria;
     private int totalScore;
 
-    public AnswerSetScoreCalculator(AnswerMapWrapper profileAnswers, Criteria criteria) {
+    public AnswerSetScoreCalculator(AnswerContainer profileAnswers, Criteria criteria) {
         this.profileAnswers = profileAnswers;
         this.criteria = criteria;
     }
 
-    public void setProfileAnswers(AnswerMapWrapper profileAnswers) {
+    public void setProfileAnswers(AnswerContainer profileAnswers) {
         this.profileAnswers = profileAnswers;
     }
 
@@ -31,8 +31,8 @@ public class AnswerSetScoreCalculator {
     private void calculateScoreAgainstCriteria() {
         for (Criterion criterion : criteria) {
             int answerScore = calculateAnswerScoreAgainst(criterion);
-            if (answerScore == -1) {
-                totalScore = -1;
+            if (answerScore == BasicScore.NOT_FULLFILL_A_BASIC_CRITERION.getValue()) {
+                totalScore = answerScore;
                 return;
             }
             totalScore += answerScore;
@@ -43,10 +43,10 @@ public class AnswerSetScoreCalculator {
         Answer answer = profileAnswers.getByQuestionText(
             criterion.getDesirableAnswer().getQuestionText());
         if (answer.doesNotFulfillBasicCriterion(criterion)) {
-            return Score.NOT_FULLFILL_A_BASIC_CRITERION.getValue();
+            return BasicScore.NOT_FULLFILL_A_BASIC_CRITERION.getValue();
         }
         return criterion.isFulfilledBy(answer) ? 
             criterion.getScore() : 
-            Score.NOT_FULLFILL_A_NONBASIC_CRITERION.getValue();
+            BasicScore.NOT_FULLFILL_A_NONBASIC_CRITERION.getValue();
     }
 }

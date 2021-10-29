@@ -1,9 +1,13 @@
-package com.example.jobsearch.collectionwrappers;
+package com.example.jobsearch.containers;
 
 import java.util.*;
 
-public class ChoicesListWrapper {
-    private List<String> choices = new ArrayList<>();
+public class ChoiceContainer {
+    private List<String> choices;
+
+    public ChoiceContainer() {
+        choices = new ArrayList<>();
+    }
 
     public boolean add(String choice) {
         return choices.add(choice);

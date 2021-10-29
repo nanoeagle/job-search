@@ -1,13 +1,13 @@
 package com.example.jobsearch.questions;
 
-import com.example.jobsearch.collectionwrappers.ChoicesListWrapper;
+import com.example.jobsearch.containers.ChoiceContainer;
 
 public abstract class Question {
     private int id;
     private String text;
-    private ChoicesListWrapper choices;
+    private ChoiceContainer choices;
     
-    public Question(int id, String text, ChoicesListWrapper choices) {
+    public Question(int id, String text, ChoiceContainer choices) {
         this.id = id;
         this.text = text;
         this.choices = choices;
@@ -15,11 +15,5 @@ public abstract class Question {
 
     public int getId() { return id; }
     public String getText() { return text; }
-    public ChoicesListWrapper getChoices() { return choices; }
-
-    // public boolean match(Answer answer) {
-    //     return false;
-    // }
-    
-    // public abstract boolean matches(int expected, int actual);
+    public ChoiceContainer getChoices() { return choices; }
 }

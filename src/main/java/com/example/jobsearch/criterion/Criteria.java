@@ -2,26 +2,31 @@ package com.example.jobsearch.criterion;
 
 import java.util.*;
 
-public class Criteria implements Iterable<Criterion> {
-    
-    private List<Criterion> criteria = new ArrayList<>();
+import com.example.jobsearch.containers.ScoreContainer;
 
-    public void add(Criterion criterion) {
-        criteria.add(criterion);
+public class Criteria implements Iterable<Criterion> {
+
+    private Set<Criterion> criteria;
+    private ScoreContainer scoreSet;
+
+    public Criteria() {
+        criteria = new HashSet<>();
+    }
+
+    public boolean add(Criterion criterion) {
+        return criteria.add(criterion);
+    }
+
+    public boolean remove(Criterion criterion) {
+        return criteria.remove(criterion);
+    }
+
+    public ScoreContainer getScoreSet() {
+        return scoreSet;
     }
 
     @Override
     public Iterator<Criterion> iterator() {
         return criteria.iterator();
-    }
-    
-    public int arithmeticMean() {
-        return 0;
-    }
-
-    public double geometricMean(int[] numbers) {
-        int productOfNumbers = Arrays.stream(numbers)
-            .reduce(1, (product, number) -> product * number);
-        return Math.pow(productOfNumbers, 1.0 / numbers.length);
     }
 }

@@ -5,28 +5,31 @@ import com.example.jobsearch.answer.Answer;
 
 public class Criterion implements Scoreable {
     private Answer desirableAnswer;
-    private Weight weight;
+    private Importance importance;
 
-    public Criterion(Answer desirableAnswer, Weight weight) {
+    public Criterion(Answer desirableAnswer, Importance importance) {
         this.desirableAnswer = desirableAnswer;
-        this.weight = weight;
+        this.importance = importance;
     }
     
-    @Override
-    public int getScore() { return weight.getValue(); }
     public Answer getDesirableAnswer() { return desirableAnswer; }
-    public Weight getWeight() { return weight; }
+    public Importance getImportance() { return importance; }
     
     public void setDesirableAnswer(Answer desirableAnswer) { this.desirableAnswer = desirableAnswer; }
-    public void setWeight(Weight weight) { this.weight = weight; }
+    public void setImportance(Importance importance) { this.importance = importance; }
 
     public boolean isFulfilledBy(Answer answer) {
-        return weight == Weight.TRIVIAL 
+        return importance == Importance.TRIVIAL 
             || answer.matches(desirableAnswer);
     }
 
     public boolean isBasicCriterion() {
-        return weight == Weight.CRITICAL 
-            || weight == Weight.VERYIMPORTANT;
+        return importance == Importance.CRITICAL 
+            || importance == Importance.VERYIMPORTANT;
+    }
+    
+    @Override
+    public int getScore() { 
+        return importance.getValue() * Magnification.TEN_TIMES.getValue(); 
     }
 }

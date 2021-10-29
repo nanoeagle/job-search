@@ -1,4 +1,4 @@
-    package com.example.jobsearch.answer;
+package com.example.jobsearch.answer;
 
 import com.example.jobsearch.criterion.Criterion;
 import com.example.jobsearch.questions.Question;
