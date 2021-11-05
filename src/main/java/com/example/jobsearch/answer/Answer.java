@@ -1,30 +1,24 @@
 package com.example.jobsearch.answer;
 
 import com.example.jobsearch.criterion.Criterion;
-import com.example.jobsearch.questions.Question;
+import com.example.jobsearch.question.Question;
 
 public class Answer {
-    private int index;
+    private int choiceIndexInQuestion;
     private Question question;
 
-    public Answer(Question question, int index) {
+    public Answer(Question question, int choiceIndexInQuestion) {
         this.question = question;
-        this.index = index;
+        this.choiceIndexInQuestion = choiceIndexInQuestion;
     }
 
-    public Answer(Question question, String answerChoice) {
+    public Answer(Question question, String choice) {
         this.question = question;
-        this.index = question.getChoices().indexOf(answerChoice);
+        this.choiceIndexInQuestion = question.getChoices().indexOf(choice);
     }
     
-    public int getIndex() { return index; }
+    public int getChoiceIndexInQuestion() { return choiceIndexInQuestion; }
     public Question getQuestion() { return question; }
-    public String getQuestionText() { return question.getText(); }
-
-    public boolean matches(Answer otherAnswer) {
-        return question.getId() == otherAnswer.getQuestion().getId() 
-            && index == otherAnswer.index;
-    }
 
     public boolean doesNotFulfillBasicCriterion(Criterion criterion) {
         return !criterion.isFulfilledBy(this) 
@@ -32,11 +26,24 @@ public class Answer {
     }
 
     @Override
+    public int hashCode() {
+        return question.getChoices().getChoiceAt(choiceIndexInQuestion)
+            .hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Answer otherAnswer = (Answer) obj;
+        return question.getId() == otherAnswer.question.getId()
+            && choiceIndexInQuestion == otherAnswer.choiceIndexInQuestion;
+    }
+
+    @Override
     public String toString() {
         return String.format(
             "%s %s", 
             question.getText(), 
-            question.getChoices().getChoiceAt(index)
+            question.getChoices().getChoiceAt(choiceIndexInQuestion)
         );
     }
 }

@@ -1,9 +1,7 @@
-package com.example.jobsearch.calc;
+package com.example.jobsearch.profile;
 
 public enum BasicScore {
-    NOT_FULLFILL_A_BASIC_CRITERION(-1),
-    NOT_FULLFILL_A_NONBASIC_CRITERION(0),
-    NOT_FULLFILL_ANY_CRITERION(0);
+    NOT_FULLFILL_BASIC_CRITERION(-1);
 
     private int value;
     private BasicScore(int value) { this.value = value; }

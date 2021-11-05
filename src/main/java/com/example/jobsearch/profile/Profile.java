@@ -1,6 +1,4 @@
-package com.example.jobsearch;
-
-import com.example.jobsearch.containers.AnswerContainer;
+package com.example.jobsearch.profile;
 
 public class Profile {
     private String name;

@@ -1,15 +1,13 @@
-package com.example.jobsearch.questions;
-
-import com.example.jobsearch.containers.ChoiceContainer;
+package com.example.jobsearch.question;
 
 public abstract class Question {
     private int id;
     private String text;
     private ChoiceContainer choices;
     
-    public Question(int id, String text, ChoiceContainer choices) {
+    public Question(int id, String content, ChoiceContainer choices) {
         this.id = id;
-        this.text = text;
+        this.text = content;
         this.choices = choices;
     }
 

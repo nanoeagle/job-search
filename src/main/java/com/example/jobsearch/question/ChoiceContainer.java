@@ -1,4 +1,4 @@
-package com.example.jobsearch.containers;
+package com.example.jobsearch.question;
 
 import java.util.*;
 
@@ -13,8 +13,8 @@ public class ChoiceContainer {
         return choices.add(choice);
     }
 
-    public String getChoiceAt(int i) { 
-        return choices.get(i); 
+    public String getChoiceAt(int index) { 
+        return choices.get(index); 
     }
 
     public int indexOf(String choice) {

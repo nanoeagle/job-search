@@ -2,12 +2,9 @@ package com.example.jobsearch.criterion;
 
 import java.util.*;
 
-import com.example.jobsearch.containers.ScoreContainer;
-
 public class Criteria implements Iterable<Criterion> {
 
     private Set<Criterion> criteria;
-    private ScoreContainer scoreSet;
 
     public Criteria() {
         criteria = new HashSet<>();
@@ -19,10 +16,6 @@ public class Criteria implements Iterable<Criterion> {
 
     public boolean remove(Criterion criterion) {
         return criteria.remove(criterion);
-    }
-
-    public ScoreContainer getScoreSet() {
-        return scoreSet;
     }
 
     @Override

@@ -1,7 +1,6 @@
-package com.example.jobsearch.calc;
+package com.example.jobsearch.profile;
 
 import com.example.jobsearch.answer.Answer;
-import com.example.jobsearch.containers.AnswerContainer;
 import com.example.jobsearch.criterion.*;
 
 public class AnswerSetScoreCalculator {
@@ -31,7 +30,7 @@ public class AnswerSetScoreCalculator {
     private void calculateScoreAgainstCriteria() {
         for (Criterion criterion : criteria) {
             int answerScore = calculateAnswerScoreAgainst(criterion);
-            if (answerScore == BasicScore.NOT_FULLFILL_A_BASIC_CRITERION.getValue()) {
+            if (answerScore == BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue()) {
                 totalScore = answerScore;
                 return;
             }
@@ -40,13 +39,11 @@ public class AnswerSetScoreCalculator {
     }
 
     private int calculateAnswerScoreAgainst(Criterion criterion) {
-        Answer answer = profileAnswers.getByQuestionText(
-            criterion.getDesirableAnswer().getQuestionText());
+        Answer answer = profileAnswers.getAnswerByQuestionId(
+            criterion.getDesirableAnswer().getQuestion().getId());
         if (answer.doesNotFulfillBasicCriterion(criterion)) {
-            return BasicScore.NOT_FULLFILL_A_BASIC_CRITERION.getValue();
+            return BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue();
         }
-        return criterion.isFulfilledBy(answer) ? 
-            criterion.getScore() : 
-            BasicScore.NOT_FULLFILL_A_NONBASIC_CRITERION.getValue();
+        return criterion.isFulfilledBy(answer) ? criterion.getScore() : 0;
     }
 }
