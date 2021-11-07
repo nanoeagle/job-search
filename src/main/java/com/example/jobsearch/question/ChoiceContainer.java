@@ -20,4 +20,8 @@ public class ChoiceContainer {
     public int indexOf(String choice) {
         return choices.indexOf(choice);
     }
+
+    public int size() {
+        return choices.size();
+    }
 }
