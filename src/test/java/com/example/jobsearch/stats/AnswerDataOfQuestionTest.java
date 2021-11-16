@@ -71,7 +71,7 @@ public class AnswerDataOfQuestionTest {
     }
 
     @Test
-    public void dataMapReflectsExactlyTheNumberOfAnswersEachKindLikePredefinedValues() {
+    public void dataMapReflectsExactlyTheNumberOfAnswersEachKindAsPredefinedValues() {
         Map<Answer, AtomicInteger> dataMap = answerData.getCopyOfDataMap();
         assertThat(dataMap.get(answerYes).get(), equalTo(THE_NUMBER_OF_ANSWERS_YES));
         assertThat(dataMap.get(answerNo).get(), equalTo(THE_NUMBER_OF_ANSWERS_NO));

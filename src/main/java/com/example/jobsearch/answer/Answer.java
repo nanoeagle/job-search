@@ -4,7 +4,7 @@ import com.example.jobsearch.criterion.Criterion;
 import com.example.jobsearch.exception.ExceptionMessages;
 import com.example.jobsearch.question.Question;
 
-public class Answer {
+public class Answer implements Comparable<Answer> {
     private Question question;
     private int choiceIndexInQuestion;
 
@@ -42,15 +42,15 @@ public class Answer {
 
     @Override
     public int hashCode() {
-        return question.getChoices()
+        return question.getText().hashCode() - question.getChoices()
             .getChoiceAt(choiceIndexInQuestion).hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        Answer otherAnswer = (Answer) obj;
-        return question.getId() == otherAnswer.question.getId() && 
-            choiceIndexInQuestion == otherAnswer.choiceIndexInQuestion;
+        Answer anotherAnswer = (Answer) obj;
+        return question.getId() == anotherAnswer.question.getId() && 
+            choiceIndexInQuestion == anotherAnswer.choiceIndexInQuestion;
     }
 
     @Override
@@ -60,5 +60,12 @@ public class Answer {
             question.getText(), 
             question.getChoices().getChoiceAt(choiceIndexInQuestion)
         );
+    }
+
+    @Override
+    public int compareTo(Answer anotherAnswer) {
+        int sub = question.getId() - anotherAnswer.question.getId();
+        return (sub != 0) ? sub : 
+            choiceIndexInQuestion - anotherAnswer.choiceIndexInQuestion;
     }
 }

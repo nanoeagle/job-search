@@ -9,6 +9,11 @@ public class ChoiceContainer {
         choices = new ArrayList<>();
     }
 
+    public ChoiceContainer(String[] predefinedChoices) {
+        choices = new ArrayList<>(
+            Arrays.asList(predefinedChoices));
+    }
+
     public boolean add(String choice) {
         return choices.add(choice);
     }
