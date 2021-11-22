@@ -51,7 +51,7 @@ public class AnswerSetScoreCalculatorTest {
 
     @Before
     public void createProfile() {
-        profile = new Profile("James Hunter");
+        profile = new Profile(1, "James Hunter");
     }
     
     @Before

@@ -8,6 +8,11 @@ public class AnswerSetScoreCalculator {
     private Criteria criteria;
     private int totalScore;
 
+    public AnswerSetScoreCalculator(Criteria criteria) {
+        profileAnswers = new AnswerContainer();
+        this.criteria = criteria;
+    }
+
     public AnswerSetScoreCalculator(AnswerContainer profileAnswers, Criteria criteria) {
         this.profileAnswers = profileAnswers;
         this.criteria = criteria;
@@ -15,10 +20,6 @@ public class AnswerSetScoreCalculator {
 
     public void setProfileAnswers(AnswerContainer profileAnswers) {
         this.profileAnswers = profileAnswers;
-    }
-
-    public void setCriteria(Criteria criteria) {
-        this.criteria = criteria;
     }
 
     public int calculateTotalScore() {

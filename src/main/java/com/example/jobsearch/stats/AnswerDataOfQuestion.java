@@ -16,7 +16,7 @@ public class AnswerDataOfQuestion {
     }
 
     public Map<Answer, AtomicInteger> getCopyOfDataMap() {
-        return new HashMap<>(theNumberOfAnswersEachKind);
+        return Map.copyOf(theNumberOfAnswersEachKind);
     }
 
     public int getTheNumberOfAnswersEquivalentTo(Answer answer) 

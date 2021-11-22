@@ -17,14 +17,14 @@ public class Answer implements Comparable<Answer> {
                 .getValue()); 
     }
 
-    public Answer(Question question, String choice) {
-        this(question, question.getChoices().indexOf(choice));
-    }
-
     private boolean choiceIndexIsWithinBounds(int index) {
         if (index >= 0 && index < question.getChoices().size())
             return true;
         return false;
+    }
+
+    public Answer(Question question, String choice) {
+        this(question, question.getChoices().indexOf(choice));
     }
     
     public int getChoiceIndexInQuestion() { 
