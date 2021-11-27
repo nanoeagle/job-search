@@ -40,11 +40,9 @@ public class AnswerSetScoreCalculator {
     }
 
     private int calculateAnswerScoreAgainst(Criterion criterion) {
-        Answer answer = profileAnswers.getAnswerByQuestionId(
-            criterion.getDesirableAnswer().getQuestion().getId());
-        if (answer.doesNotFulfillBasicCriterion(criterion)) {
+        Answer answer = profileAnswers.getAnswerByCriterion(criterion);
+        if (!criterion.isFulfilledBy(answer) && criterion.isBasicCriterion())
             return BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue();
-        }
         return criterion.isFulfilledBy(answer) ? criterion.getScore() : 0;
     }
 }

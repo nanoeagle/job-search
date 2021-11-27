@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.example.jobsearch.answer.Answer;
+import com.example.jobsearch.criterion.Criterion;
 
 public class AnswerContainer {
     private Map<Integer, Answer> answers;
@@ -19,6 +20,15 @@ public class AnswerContainer {
 
     public void clearAll() {
         answers.clear();
+    }
+
+    public Answer getAnswerByCriterion(Criterion criterion) 
+    throws IllegalArgumentException {
+        Answer desirableAnswer = criterion.getDesirableAnswer();
+        int idOfQuestionCorrespondingToCriterion = 
+            desirableAnswer.getQuestion().getId();
+        return getAnswerByQuestionId(
+            idOfQuestionCorrespondingToCriterion);        
     }
 
     public Answer getAnswerByQuestionId(int questionId) 

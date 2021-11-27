@@ -10,8 +10,7 @@ public class ChoiceContainer {
     }
 
     public ChoiceContainer(String[] predefinedChoices) {
-        choices = new ArrayList<>(
-            Arrays.asList(predefinedChoices));
+        choices = new ArrayList<>(Arrays.asList(predefinedChoices));
     }
 
     public boolean add(String choice) {
@@ -24,6 +23,11 @@ public class ChoiceContainer {
 
     public int indexOf(String choice) {
         return choices.indexOf(choice);
+    }
+
+    public boolean isChoiceIndexWithinBounds(int index) {
+        if (index >= 0 && index < choices.size()) return true;
+        return false;
     }
 
     public int size() {

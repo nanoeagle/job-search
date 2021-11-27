@@ -34,7 +34,7 @@ public class AnswerDataOfQuestionTest {
             answers[i] = new Answer(question, 
                 i < THE_NUMBER_OF_ANSWERS_YES ? "Yes" : "No");
         }
-        answerData = new AnswerDataOfQuestion(question.getId());
+        answerData = new AnswerDataOfQuestion(question);
         answerData.add(Arrays.asList(answers));
         answerYes = answers[0];
         answerNo = answers[answers.length - 1];
@@ -72,7 +72,7 @@ public class AnswerDataOfQuestionTest {
 
     @Test
     public void dataMapReflectsExactlyTheNumberOfAnswersEachKindAsPredefinedValues() {
-        Map<Answer, AtomicInteger> dataMap = answerData.getCopyOfDataMap();
+        Map<Answer, AtomicInteger> dataMap = answerData.getCopyOfData();
         assertThat(dataMap.get(answerYes).get(), equalTo(THE_NUMBER_OF_ANSWERS_YES));
         assertThat(dataMap.get(answerNo).get(), equalTo(THE_NUMBER_OF_ANSWERS_NO));
     }

@@ -5,59 +5,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.example.jobsearch.answer.Answer;
 import com.example.jobsearch.exception.ExceptionMessages;
+import com.example.jobsearch.question.Question;
 
-public class AnswerDataOfQuestion {
-    private int questionId;
-    private Map<Answer, AtomicInteger> theNumberOfAnswersEachKind;
+public class AnswerDataOfQuestion extends AnswerData {
+    private Question question;
 
-    public AnswerDataOfQuestion(int questionId) {
-        this.questionId = questionId;
-        theNumberOfAnswersEachKind = new HashMap<>();
+    public AnswerDataOfQuestion(Question question) {
+        this.question = question;
     }
 
-    public Map<Answer, AtomicInteger> getCopyOfDataMap() {
-        return Map.copyOf(theNumberOfAnswersEachKind);
+    public void add(List<Answer> answers) {
+        answers.stream().filter(answer -> answer.isFor(question))
+            .forEach(this::add);
     }
 
     public int getTheNumberOfAnswersEquivalentTo(Answer answer) 
     throws IllegalArgumentException {
-        if (answerIsForTheQuestionWhoseTheData(answer)) {
+        if (answer.isFor(question)) {
             AtomicInteger theNumberOfEquivalentAnswers 
-                = theNumberOfAnswersEachKind.get(answer);
+                = getDataOfAnswerEquivalentTo(answer);
             if (theNumberOfEquivalentAnswers == null) return 0;
             return theNumberOfEquivalentAnswers.get();
         }
         throw new IllegalArgumentException(
             ExceptionMessages.ILLEGAL_ANSWER_ARGUMENT.getValue());
-    }
-
-    private boolean answerIsForTheQuestionWhoseTheData(Answer answer) {
-        return answer.getQuestion().getId() == questionId;
-    }
-
-    public void add(List<Answer> answers) {
-        answers.stream()
-            .filter(a -> answerIsForTheQuestionWhoseTheData(a))
-            .forEach(this::add);
-    }
-
-    private void add(Answer answer) {
-        if (dataAlreadyContains(answer)) {
-            increaseTheNumberOfAnswersEquivalentTo(answer);
-        } else {
-            putNewAnswerIntoData(answer);
-        }
-    }
-
-    private boolean dataAlreadyContains(Answer answer) {
-        return theNumberOfAnswersEachKind.containsKey(answer);
-    }
-
-    private void increaseTheNumberOfAnswersEquivalentTo(Answer answer) {
-        theNumberOfAnswersEachKind.get(answer).incrementAndGet();
-    }
-
-    private void putNewAnswerIntoData(Answer newAnswer) {
-        theNumberOfAnswersEachKind.put(newAnswer, new AtomicInteger(1));
     }
 }

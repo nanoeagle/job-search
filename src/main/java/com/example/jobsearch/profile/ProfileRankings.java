@@ -17,7 +17,8 @@ public class ProfileRankings {
     public void add(Profile profile) {
         if (profile != null) {
             scoreCalculator.setProfileAnswers(profile.getAnswers());
-            rankings.put(profile, scoreCalculator.calculateTotalScore());
+            int profileScore = scoreCalculator.calculateTotalScore();
+            rankings.put(profile, profileScore);
         } else 
             throw new IllegalArgumentException("The input profile is null.");
     }

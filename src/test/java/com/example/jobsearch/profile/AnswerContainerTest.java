@@ -17,7 +17,7 @@ public class AnswerContainerTest {
 
     @Before
     public void createAnswerContainer() {
-        sampleAnswers = new TreeSet<>();
+        sampleAnswers = new TreeSet<>(new TemporaryAnswerComparator());
         sampleAnswers.add(new Answer(
             new YesNoQuestion(1, "Are you ok?"), "Yes"));
         sampleAnswers.add(new Answer(
@@ -39,7 +39,8 @@ public class AnswerContainerTest {
         Set<Answer> answersNotForYesNoQuestions = answerContainer.filterBy(
             a -> a.getQuestion().getClass() != YesNoQuestion.class);
         
-        TreeSet<Answer> allAnswers = new TreeSet<>();
+        TreeSet<Answer> allAnswers = 
+            new TreeSet<>(new TemporaryAnswerComparator());
         allAnswers.addAll(answersForYesNoQuestions);
         allAnswers.addAll(answersNotForYesNoQuestions);
         
@@ -76,5 +77,14 @@ public class AnswerContainerTest {
         for (int i = 0; i < numberOfTimes; i++) funcToTest.run();
         long stop = System.nanoTime();
         return (int) (stop - start) / 1000000;
+    }
+
+    private class TemporaryAnswerComparator implements Comparator<Answer> {
+        @Override
+        public int compare(Answer a1, Answer a2) {
+            int sub = a1.getQuestion().getId() - a2.getQuestion().getId();
+            return (sub != 0) ? sub : 
+                a1.getChoiceIndexInQuestion() - a2.getChoiceIndexInQuestion();
+        }
     }
 }

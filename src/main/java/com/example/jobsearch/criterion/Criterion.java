@@ -33,6 +33,7 @@ public class Criterion {
     }
     
     public int getScore() { 
-        return importance.getValue() * Magnification.FIVE_TIMES.getValue(); 
+        return importance.getValue() * 
+            Magnification.FIVE_TIMES.getValue(); 
     }
 }

@@ -1,26 +1,19 @@
 package com.example.jobsearch.answer;
 
-import com.example.jobsearch.criterion.Criterion;
 import com.example.jobsearch.exception.ExceptionMessages;
 import com.example.jobsearch.question.Question;
 
-public class Answer implements Comparable<Answer> {
+public class Answer {
     private Question question;
     private int choiceIndexInQuestion;
 
     public Answer(Question question, int choiceIndex) {
         this.question = question;
-        if (choiceIndexIsWithinBounds(choiceIndex)) {
+        if (question.getChoices().isChoiceIndexWithinBounds(choiceIndex)) {
             choiceIndexInQuestion = choiceIndex;
         } else throw new IllegalArgumentException(
             ExceptionMessages.ILLEGAL_CHOICE_INDEX_ARGUMENT
                 .getValue()); 
-    }
-
-    private boolean choiceIndexIsWithinBounds(int index) {
-        if (index >= 0 && index < question.getChoices().size())
-            return true;
-        return false;
     }
 
     public Answer(Question question, String choice) {
@@ -35,15 +28,13 @@ public class Answer implements Comparable<Answer> {
         return question; 
     }
 
-    public boolean doesNotFulfillBasicCriterion(Criterion criterion) {
-        return !criterion.isFulfilledBy(this) 
-            && criterion.isBasicCriterion();
+    public boolean isFor(Question question) {
+        return this.question.getId() == question.getId();
     }
 
     @Override
     public int hashCode() {
-        return question.getText().hashCode() - question.getChoices()
-            .getChoiceAt(choiceIndexInQuestion).hashCode();
+        return question.getId() - choiceIndexInQuestion;
     }
 
     @Override
@@ -60,12 +51,5 @@ public class Answer implements Comparable<Answer> {
             question.getText(), 
             question.getChoices().getChoiceAt(choiceIndexInQuestion)
         );
-    }
-
-    @Override
-    public int compareTo(Answer anotherAnswer) {
-        int sub = question.getId() - anotherAnswer.question.getId();
-        return (sub != 0) ? sub : 
-            choiceIndexInQuestion - anotherAnswer.choiceIndexInQuestion;
     }
 }
