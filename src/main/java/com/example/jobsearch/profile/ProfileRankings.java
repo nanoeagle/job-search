@@ -6,18 +6,18 @@ import java.util.Map.Entry;
 import com.example.jobsearch.criterion.Criteria;
 
 public class ProfileRankings {
-    private AnswerSetScoreCalculator scoreCalculator;
+    private Criteria criteria;
     private TreeMap<Profile, Integer> rankings;
 
     public ProfileRankings(Criteria criteria) {
-        scoreCalculator = new AnswerSetScoreCalculator(criteria);
+        this.criteria = criteria;
         rankings = new TreeMap<>(new ScoreBasedProfileComparator());
     }
 
     public void add(Profile profile) {
         if (profile != null) {
-            scoreCalculator.setProfileAnswers(profile.getAnswers());
-            int profileScore = scoreCalculator.calculateTotalScore();
+            int profileScore = new AnswerSetScoreCalculator(
+                profile.getAnswers(), criteria).getTotalScore();
             rankings.put(profile, profileScore);
         } else 
             throw new IllegalArgumentException("The input profile is null.");
@@ -43,12 +43,10 @@ public class ProfileRankings {
     private class ScoreBasedProfileComparator implements Comparator<Profile> {
         @Override
         public int compare(Profile profileA, Profile profileB) {
-            scoreCalculator.setProfileAnswers(profileA.getAnswers());
-            int profile_A_Score = scoreCalculator.calculateTotalScore();
-    
-            scoreCalculator.setProfileAnswers(profileB.getAnswers());
-            int profile_B_Score = scoreCalculator.calculateTotalScore();
-            
+            int profile_A_Score = new AnswerSetScoreCalculator(
+                profileA.getAnswers(), criteria).getTotalScore();
+            int profile_B_Score = new AnswerSetScoreCalculator(
+                profileB.getAnswers(), criteria).getTotalScore();
             return profile_B_Score - profile_A_Score;
         }
     }

@@ -8,27 +8,14 @@ public class AnswerSetScoreCalculator {
     private Criteria criteria;
     private int totalScore;
 
-    public AnswerSetScoreCalculator(Criteria criteria) {
-        profileAnswers = new AnswerContainer();
-        this.criteria = criteria;
-    }
-
-    public AnswerSetScoreCalculator(AnswerContainer profileAnswers, Criteria criteria) {
+    public AnswerSetScoreCalculator(AnswerContainer profileAnswers, 
+    Criteria criteria) {
         this.profileAnswers = profileAnswers;
         this.criteria = criteria;
+        calculateTotalScoreAgainstCriteria();
     }
 
-    public void setProfileAnswers(AnswerContainer profileAnswers) {
-        this.profileAnswers = profileAnswers;
-    }
-
-    public int calculateTotalScore() {
-        totalScore = 0;
-        calculateScoreAgainstCriteria();
-        return totalScore;
-    }
-
-    private void calculateScoreAgainstCriteria() {
+    private void calculateTotalScoreAgainstCriteria() {
         for (Criterion criterion : criteria) {
             int answerScore = calculateAnswerScoreAgainst(criterion);
             if (answerScore == BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue()) {
@@ -41,8 +28,13 @@ public class AnswerSetScoreCalculator {
 
     private int calculateAnswerScoreAgainst(Criterion criterion) {
         Answer answer = profileAnswers.getAnswerByCriterion(criterion);
-        if (!criterion.isFulfilledBy(answer) && criterion.isBasicCriterion())
+        boolean answerFulfillsCriterion = criterion.isFulfilledBy(answer);
+        if (!answerFulfillsCriterion && criterion.isBasicCriterion())
             return BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue();
-        return criterion.isFulfilledBy(answer) ? criterion.getScore() : 0;
+        return answerFulfillsCriterion ? criterion.getScore() : 0;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
     }
 }

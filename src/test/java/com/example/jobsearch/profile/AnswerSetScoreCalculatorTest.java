@@ -70,7 +70,7 @@ public class AnswerSetScoreCalculatorTest {
         scoreCalculator = new AnswerSetScoreCalculator(
             profile.getAnswers(), criteria);
         assertEquals(BasicScore.NOT_FULLFILL_BASIC_CRITERION.getValue(), 
-            scoreCalculator.calculateTotalScore());
+            scoreCalculator.getTotalScore());
     }
     
     @Test
@@ -83,7 +83,7 @@ public class AnswerSetScoreCalculatorTest {
         
         scoreCalculator = new AnswerSetScoreCalculator(
             profile.getAnswers(), criteria);
-        assertThat(scoreCalculator.calculateTotalScore(), 
+        assertThat(scoreCalculator.getTotalScore(), 
             equalTo(trivialCriterion.getScore()));
     }
 
@@ -102,7 +102,7 @@ public class AnswerSetScoreCalculatorTest {
         
         scoreCalculator = new AnswerSetScoreCalculator(
             profile.getAnswers(), criteria);
-        assertThat(scoreCalculator.calculateTotalScore(), equalTo(0));
+        assertThat(scoreCalculator.getTotalScore(), equalTo(0));
     }
 
     @Test
@@ -126,6 +126,6 @@ public class AnswerSetScoreCalculatorTest {
             new AnswerSetScoreCalculator(profile.getAnswers(), criteria);
         int totalScore = 0;
         for (Criterion criterion : criteria) totalScore += criterion.getScore();
-        assertThat(scoreCalculator.calculateTotalScore(), equalTo(totalScore));
+        assertThat(scoreCalculator.getTotalScore(), equalTo(totalScore));
     }
 }
