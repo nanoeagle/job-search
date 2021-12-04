@@ -12,8 +12,7 @@ public class Answer {
         if (question.getChoices().isChoiceIndexWithinBounds(choiceIndex)) {
             choiceIndexInQuestion = choiceIndex;
         } else throw new IllegalArgumentException(
-            ExceptionMessages.ILLEGAL_CHOICE_INDEX_ARGUMENT
-                .getValue()); 
+            ExceptionMessages.ILLEGAL_CHOICE_INDEX_ARGUMENT.getVal()); 
     }
 
     public Answer(Question question, String choice) {

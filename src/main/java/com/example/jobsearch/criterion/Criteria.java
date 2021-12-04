@@ -14,6 +14,10 @@ public class Criteria implements Iterable<Criterion> {
         return criteria.add(criterion);
     }
 
+    public void add(Criterion... criterions) {
+        for (Criterion criterion : criterions) add(criterion);
+    }
+
     public boolean remove(Criterion criterion) {
         return criteria.remove(criterion);
     }

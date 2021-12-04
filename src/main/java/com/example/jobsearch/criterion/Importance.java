@@ -9,5 +9,5 @@ public enum Importance {
      
     private int value;
     private Importance(int value) { this.value = value; }
-    public int getValue() { return value; }
+    public int getVal() { return value; }
 }

@@ -16,7 +16,9 @@ public class Profile {
     public AnswerContainer getAnswers() { return answers; }
     
     public void setName(String name) { this.name = name; }
-    public void setAnswers(AnswerContainer answers) { this.answers = answers; }
+    public void setAnswers(AnswerContainer answers) { 
+        this.answers = answers;
+    }
 
     @Override
     public int hashCode() {

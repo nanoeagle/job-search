@@ -17,6 +17,10 @@ public class AnswerContainer {
     public Answer put(Answer answer) {
         return answers.put(answer.getQuestion().getId(), answer);
     }
+    
+    public void put(Answer... answers) {
+        for (Answer answer : answers) put(answer);
+    }
 
     public void clearAll() {
         answers.clear();

@@ -7,5 +7,5 @@ public enum Magnification {
      
     private int value;
     private Magnification(int value) { this.value = value; }
-    public int getValue() { return value; }
+    public int getVal() { return value; }
 }

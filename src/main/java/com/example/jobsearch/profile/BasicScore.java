@@ -5,5 +5,5 @@ public enum BasicScore {
 
     private int value;
     private BasicScore(int value) { this.value = value; }
-    public int getValue() { return value; }
+    public int getVal() { return value; }
 }

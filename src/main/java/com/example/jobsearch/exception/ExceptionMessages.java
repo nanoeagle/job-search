@@ -8,5 +8,5 @@ public enum ExceptionMessages {
 
     private String value;
     private ExceptionMessages(String value) { this.value = value; }
-    public String getValue() { return value; }
+    public String getVal() { return value; }
 }
