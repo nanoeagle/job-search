@@ -33,7 +33,7 @@ public class Answer {
 
     @Override
     public int hashCode() {
-        return question.getId() - choiceIndexInQuestion;
+        return question.getId();
     }
 
     @Override
