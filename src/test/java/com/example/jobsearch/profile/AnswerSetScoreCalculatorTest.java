@@ -11,10 +11,6 @@ import com.example.jobsearch.question.*;
 import org.junit.*;
 
 public class AnswerSetScoreCalculatorTest {
-	private Question question1;
-	private Question question2;
-	private Question question3;
-
 	private Answer answerQ1_No;
 	private Answer answerQ1_Yes;
 	private Answer answerQ2_No;
@@ -29,23 +25,28 @@ public class AnswerSetScoreCalculatorTest {
 	private Criteria criteria;
 	
 	@Before
-	public void initQuestionsAndAnswers() {
-		question1 = new YesNoQuestion(
-			1, "Do you have a solid background in web development?");
-		question2 = new YesNoQuestion(
-			2, "Have you ever been involved in " +
-			"a web development project using Java?");
-		question3 = new YesNoQuestion(3, "blabla");
+	public void initAnswers() {
+		Question[] questions = createQuestions();
+		
+		answerQ1_No = new Answer(questions[0], "No");
+		answerQ1_Yes = new Answer(questions[0], "Yes");
+		answerQ2_No = new Answer(questions[1], "No");
+		answerQ2_Yes = new Answer(questions[1], "Yes");
+		answerQ3_No = new Answer(questions[2], "No");
+		
+		desirableAnswerQ1_Yes = new Answer(questions[0], "Yes");
+		desirableAnswerQ2_Yes = new Answer(questions[1], "Yes");
+		desirableAnswerQ3_No = new Answer(questions[2], "No");
+	}
 
-		answerQ1_No = new Answer(question1, "No");
-		answerQ1_Yes = new Answer(question1, "Yes");
-		answerQ2_No = new Answer(question2, "No");
-		answerQ2_Yes = new Answer(question2, "Yes");
-		answerQ3_No = new Answer(question3, "No");
-
-		desirableAnswerQ1_Yes = new Answer(question1, "Yes");
-		desirableAnswerQ2_Yes = new Answer(question2, "Yes");
-		desirableAnswerQ3_No = new Answer(question3, "No");
+	private Question[] createQuestions() {
+		return new Question[] {
+			new YesNoQuestion(
+				1, "Do you have a solid background in web development?"),
+			new YesNoQuestion(
+				2, "Have you ever been involved in " +
+				"a web development project using Java?"),
+			new YesNoQuestion(3, "blabla")};
 	}
 
 	@Before

@@ -10,64 +10,88 @@ import com.example.jobsearch.question.*;
 import org.junit.*;
 
 public class ProfileRankingsTest {
-	private Criteria criteria;
-	
 	private Profile profile1;
 	private Profile profile2;
 	private Profile profile3;
+	private ProfileRankings profileRankings;
 
 	@Before
 	public void init() {
-		Question question1 = new YesNoQuestion(
-			1, "Do you have a solid background in web development?");
-		Question question2 = new YesNoQuestion(
-			2, "Have you ever been involved in " +
-			"a web development project using Java?");
-		
-		Answer desirableAnswerQ1_Yes = new Answer(question1, "Yes");
-		Answer desirableAnswerQ2_Yes = new Answer(question2, "Yes");
-		Answer desirableAnswerQ3_No = new Answer(
-			new YesNoQuestion(3, "blabla"), "No");
-		
-		criteria = new Criteria();
+		Question[] questions = createQuestions();
+		Answer[] desirableAnswers = createDesirableAnswersBasedOn(questions);
+		Criteria criteria = createCriteriaBasedOn(desirableAnswers);
+		AnswerContainer[] profilesAnswers = 
+			createProfilesAnswersUsing(questions, desirableAnswers);
+		initProfilesUsing(profilesAnswers);
+		initProfileRankingsBasedOn(criteria);
+	}
+
+	private Question[] createQuestions() {
+		return new Question[] {
+			new YesNoQuestion(
+				1, "Do you have a solid background in web development?"),
+			new YesNoQuestion(
+				2, "Have you ever been involved in " +
+				"a web development project using Java?")};
+	}
+
+	private Answer[] createDesirableAnswersBasedOn(Question[] questions) {
+		return new Answer[] {
+			new Answer(questions[0], "Yes"),
+			new Answer(questions[1], "Yes"),
+			new Answer(new YesNoQuestion(3, "blabla"), "No")};
+	}
+
+	private Criteria createCriteriaBasedOn(Answer[] desirableAnswers) {
+		Criteria criteria = new Criteria();
 		criteria.add(new Criterion[] {
 			new Criterion(
-				desirableAnswerQ1_Yes, Importance.CRITICAL),
+				desirableAnswers[0], Importance.CRITICAL),
 			new Criterion(
-				desirableAnswerQ2_Yes, Importance.IMPORTANT),
+				desirableAnswers[1], Importance.IMPORTANT),
 			new Criterion(
-				desirableAnswerQ3_No, Importance.TRIVIAL)
+				desirableAnswers[2], Importance.TRIVIAL)
 		});
+		return criteria;
+	}
 
-		AnswerContainer profile_1_Answers = new AnswerContainer();
-		profile_1_Answers.put(desirableAnswerQ1_Yes, 
-			desirableAnswerQ2_Yes, desirableAnswerQ3_No);
-		
-		AnswerContainer profile_2_Answers = new AnswerContainer();
-		profile_2_Answers.put(new Answer(question1, "No"), 
-			desirableAnswerQ2_Yes, desirableAnswerQ3_No);
-		
-		AnswerContainer profile_3_Answers = new AnswerContainer();
-		profile_3_Answers.put(desirableAnswerQ1_Yes, 
-			new Answer(question2, "No"), desirableAnswerQ3_No);
-
+	private void initProfilesUsing(AnswerContainer[] profilesAnswers) {
 		profile1 = new Profile(1, "Anna");
 		profile2 = new Profile(2, "Jason");
 		profile3 = new Profile(3, "Mickey");
-		profile1.setAnswers(profile_1_Answers);
-		profile2.setAnswers(profile_2_Answers);
-		profile3.setAnswers(profile_3_Answers);
+		profile1.setAnswers(profilesAnswers[0]);
+		profile2.setAnswers(profilesAnswers[1]);
+		profile3.setAnswers(profilesAnswers[2]);
+	}
+
+	private AnswerContainer[] createProfilesAnswersUsing(Question[] questions, 
+	Answer[] desirableAnswers) {
+		AnswerContainer profile_1_Answers = new AnswerContainer();
+		profile_1_Answers.put(desirableAnswers[0], 
+			desirableAnswers[1], desirableAnswers[2]);
+		
+		AnswerContainer profile_2_Answers = new AnswerContainer();
+		profile_2_Answers.put(new Answer(questions[0], "No"), 
+			desirableAnswers[1], desirableAnswers[2]);
+		
+		AnswerContainer profile_3_Answers = new AnswerContainer();
+		profile_3_Answers.put(desirableAnswers[0], 
+			new Answer(questions[1], "No"), desirableAnswers[2]);
+		
+		return new AnswerContainer[] {profile_1_Answers, 
+			profile_2_Answers, profile_3_Answers};
+	}
+
+	private void initProfileRankingsBasedOn(Criteria criteria) {
+		profileRankings = new ProfileRankings(criteria);
+		profileRankings.add(profile1, profile2, profile3);
 	}
 
 	@Test
-	public void gettingProfileRankingsResultsInDescScoreOrder() {
-		ProfileRankings profileRankings = new ProfileRankings(criteria);
-		profileRankings.add(profile1, profile2, profile3);
-		
+	public void gettingProfileRankingsResultsInDescOrderOfScores() {
 		Profile[] expectedOrder = {profile1, profile3, profile2};
-		Profile[] actualOrder = new Profile[expectedOrder.length];
-		actualOrder = profileRankings.getRankings()
-			.navigableKeySet().toArray(actualOrder);
+		Profile[] actualOrder = profileRankings.getRankings()
+			.navigableKeySet().toArray(new Profile[expectedOrder.length]);
 		assertThat(actualOrder, equalTo(expectedOrder));
 	}
 }

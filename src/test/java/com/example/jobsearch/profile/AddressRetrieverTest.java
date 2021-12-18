@@ -17,9 +17,13 @@ public class AddressRetrieverTest {
 	private AutoCloseable closeable;
 
 	@Before
-	public void initAddressRetrieverAndMocks() {
-		addressRetriever = new AddressRetriever();
+	public void initCloseable() {
 		closeable = MockitoAnnotations.openMocks(this);
+	}
+
+	@Before
+	public void initAddressRetriever() {
+		addressRetriever = new AddressRetriever();
 	}
 
 	@After
@@ -28,7 +32,7 @@ public class AddressRetrieverTest {
 	}
 
 	@Test
-	public void retrievesExpectedAddressBasedOnCoordinates() 
+	public void retrieverRetrievesExpectedAddressFromCoordinates() 
 	throws IOException {
 		Address expectedAddress = new Address("324", "North Tejon Street", 
 			"Colorado Springs", "Colorado", "80903");

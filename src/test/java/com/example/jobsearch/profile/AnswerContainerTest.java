@@ -31,8 +31,8 @@ public class AnswerContainerTest {
 		});
 	}
 
-	private void composeSampleAnswers(Answer... answerArray) {
-		for (Answer answer : answerArray) sampleAnswers.add(answer);
+	private void composeSampleAnswers(Answer[] answers) {
+		for (Answer answer : answers) sampleAnswers.add(answer);
 	}
 
 	@Before
@@ -42,7 +42,7 @@ public class AnswerContainerTest {
 
 	@Test
 	public void assertThatTheFilterMethodWorksCorrectly() {
-		composeAnswerContainer();
+		composeAnswerContainerUsingSampleAnswers();
 		Set<Answer> answersForYesNoQuestions = answerContainer.filterBy(
 			a -> a.getQuestion().getClass() == YesNoQuestion.class);
 		Set<Answer> answersNotForYesNoQuestions = answerContainer.filterBy(
@@ -52,15 +52,25 @@ public class AnswerContainerTest {
 			new TreeSet<>(new TemporaryAnswerComparator());
 		allAnswers.addAll(answersForYesNoQuestions);
 		allAnswers.addAll(answersNotForYesNoQuestions);
+
 		assertThat(allAnswers, equalTo(sampleAnswers));
 	}
 
-	private void composeAnswerContainer() {
+	private void composeAnswerContainerUsingSampleAnswers() {
 		for (Answer answer : sampleAnswers) answerContainer.put(answer);
 	}
 
 	@Test
-	public void assertThatTheFilterMethodPerformanceIsAcceptable() {
+	public void assertThePerformanceOfTheFilterMethodIsAcceptable() {
+		composeAnswerContainerUsingCustomAnswers();
+		int acceptableTimeInMs = 1000;
+		int numberOfTestingTimes = 1000;
+		Runnable task = createTask();
+		int elapsedTimeInMs = testPerformance(numberOfTestingTimes, task);
+		assertTrue(elapsedTimeInMs <= acceptableTimeInMs);
+	}
+
+	private void composeAnswerContainerUsingCustomAnswers() {
 		int dataSize = 5000;
 		for (int i = 0; i < dataSize; i++)
 			answerContainer.put(new Answer(
@@ -72,13 +82,11 @@ public class AnswerContainerTest {
 					dataSize, "What is your favorite means of transport?", 
 					new ChoiceContainer(new String[] {"Bus", "Car", "Bike"})
 				), "Bus"));
+	}
 
-		int numberOfTestingTimes = 1000;
-		Runnable task = () -> answerContainer.filterBy(a -> 
+	private Runnable createTask() {
+		return () -> answerContainer.filterBy(a -> 
 			a.getQuestion().getClass() != YesNoQuestion.class);
-		int elapsedTimeInMs = testPerformance(numberOfTestingTimes, task);
-		int acceptableTimeInMs = 1000;
-		assertTrue(elapsedTimeInMs <= acceptableTimeInMs);
 	}
 
 	private int testPerformance(int numberOfTimes, Runnable task) {

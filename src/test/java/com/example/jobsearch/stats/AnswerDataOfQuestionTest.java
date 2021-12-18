@@ -18,9 +18,9 @@ public class AnswerDataOfQuestionTest {
 	private final int THE_NUMBER_OF_ANSWERS_NO = 
 		THE_NUMBER_OF_ANSWERS - THE_NUMBER_OF_ANSWERS_YES;
 	
+	private AnswerDataOfQuestion answerData;
 	private Answer answerYes;
 	private Answer answerNo;
-	private AnswerDataOfQuestion answerData;
 	private Answer answerForAnotherQuestion;
 	
 	@Before
@@ -69,8 +69,15 @@ public class AnswerDataOfQuestionTest {
 
 	@Test
 	public void copyOfDataReflectsExactlyTheNumberOfAnswersEachKind() {
+		Map<Answer, Integer> numberOfAnswersEachKind = createExpectedMap();
 		Map<Answer, Integer> copy = answerData.getCopy();
-		assertThat(copy.get(answerYes), equalTo(THE_NUMBER_OF_ANSWERS_YES));
-		assertThat(copy.get(answerNo), equalTo(THE_NUMBER_OF_ANSWERS_NO));
+		assertThat(copy, equalTo(numberOfAnswersEachKind));
+	}
+
+	private Map<Answer, Integer> createExpectedMap() {
+		Map<Answer, Integer> numberOfAnswersEachKind = new HashMap<>();
+		numberOfAnswersEachKind.put(answerYes, THE_NUMBER_OF_ANSWERS_YES);
+		numberOfAnswersEachKind.put(answerNo, THE_NUMBER_OF_ANSWERS_NO);
+		return numberOfAnswersEachKind;
 	}
 }
