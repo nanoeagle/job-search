@@ -31,8 +31,7 @@ public class AnswerContainer {
         Answer desirableAnswer = criterion.getDesirableAnswer();
         int idOfQuestionCorrespondingToCriterion = 
             desirableAnswer.getQuestion().getId();
-        return getAnswerByQuestionId(
-            idOfQuestionCorrespondingToCriterion);        
+        return getAnswerByQuestionId(idOfQuestionCorrespondingToCriterion);        
     }
 
     public Answer getAnswerByQuestionId(int questionId) 

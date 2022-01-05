@@ -44,7 +44,7 @@ public class ProfileRankings {
 		return rankingList;
 	}
 
-	private class ScoreBasedProfileComparator implements Comparator<Profile> {
+	private final class ScoreBasedProfileComparator implements Comparator<Profile> {
 		@Override
 		public int compare(Profile profileA, Profile profileB) {
 			return getTotalScoreOf(profileB) - getTotalScoreOf(profileA);

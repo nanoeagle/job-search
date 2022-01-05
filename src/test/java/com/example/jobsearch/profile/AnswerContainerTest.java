@@ -96,7 +96,8 @@ public class AnswerContainerTest {
 		return (int) (stop - start) / 1000000;
 	}
 
-	private class TemporaryAnswerComparator implements Comparator<Answer> {
+	private static final class TemporaryAnswerComparator 
+	implements Comparator<Answer> {
 		@Override
 		public int compare(Answer a1, Answer a2) {
 			int sub = a1.getQuestion().getId() - a2.getQuestion().getId();

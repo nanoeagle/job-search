@@ -32,7 +32,7 @@ public class AnswerDataOfQuestion {
             ExceptionMessages.ILLEGAL_ANSWER_ARGUMENT.getVal());
     }
 
-    private class AnswerData {
+    private static final class AnswerData {
         private Map<Answer, Integer> numberOfAnswersPerChoice;
     
         public AnswerData() {

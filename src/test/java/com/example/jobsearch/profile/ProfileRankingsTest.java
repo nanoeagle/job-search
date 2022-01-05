@@ -88,7 +88,7 @@ public class ProfileRankingsTest {
 	}
 
 	@Test
-	public void gettingProfileRankingsResultsInDescOrderOfScores() {
+	public void presentsProfilesInDescOrderOfScores() {
 		Profile[] expectedOrder = {profile1, profile3, profile2};
 		Profile[] actualOrder = profileRankings.getRankings()
 			.navigableKeySet().toArray(new Profile[expectedOrder.length]);

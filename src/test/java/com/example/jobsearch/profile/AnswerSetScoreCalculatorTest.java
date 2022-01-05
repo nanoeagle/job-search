@@ -60,7 +60,7 @@ public class AnswerSetScoreCalculatorTest {
 	}
 
 	@Test
-	public void notFulfillingBasicCriterionResultsInNegativeScore() {
+	public void returnsNegativeScoreWhenBasicCriterionIsNotFulfilled() {
 		answers.put(new Answer[] {answerQ1_No, answerQ2_Yes});
 		criteria.add(new Criterion[] {
 			new Criterion(desirableAnswerQ1_Yes, Importance.CRITICAL),
@@ -71,7 +71,7 @@ public class AnswerSetScoreCalculatorTest {
 	}
 	
 	@Test
-	public void notFulfillingTrivialCriterionStillGetsItsScore() {
+	public void stillReturnsTrivialCriterionScoreThoughItIsNotFulfilled() {
 		answers.put(answerQ1_No);
 		Criterion trivialCriterion = new Criterion(
 			desirableAnswerQ1_Yes, Importance.TRIVIAL);
@@ -81,7 +81,7 @@ public class AnswerSetScoreCalculatorTest {
 	}
 
 	@Test
-	public void notFulfillingNeitherTrivialNorBasicCriterionGetsZeroScore() {
+	public void returnsZeroScoreWhenNeitherTrivialNorBasicCriterionIsFulfilled() {
 		answers.put(new Answer[] {answerQ1_No, answerQ2_No});
 		criteria.add(new Criterion[] {
 			new Criterion(desirableAnswerQ1_Yes, Importance.INTERESTING),
@@ -91,7 +91,7 @@ public class AnswerSetScoreCalculatorTest {
 	}
 
 	@Test
-	public void fulfillingAllCriteriaAccumulatesAllCriterionScores() {
+	public void accumulatesAllCriterionScoresWhenAllCriteriaAreFulfilled() {
 		answers.put(new Answer[] {
 			answerQ1_Yes, answerQ2_Yes, answerQ3_No});
 		criteria.add(new Criterion[] {

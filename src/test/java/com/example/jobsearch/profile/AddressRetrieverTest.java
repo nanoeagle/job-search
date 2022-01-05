@@ -32,7 +32,7 @@ public class AddressRetrieverTest {
 	}
 
 	@Test
-	public void retrieverRetrievesExpectedAddressFromCoordinates() 
+	public void retrievesExpectedAddress() 
 	throws IOException {
 		Address expectedAddress = new Address("324", "North Tejon Street", 
 			"Colorado Springs", "Colorado", "80903");

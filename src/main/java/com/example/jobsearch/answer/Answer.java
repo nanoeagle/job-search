@@ -38,6 +38,7 @@ public class Answer {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) return false;
         Answer anotherAnswer = (Answer) obj;
         return question.getId() == anotherAnswer.question.getId() && 
             choiceIndexInQuestion == anotherAnswer.choiceIndexInQuestion;
